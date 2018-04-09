@@ -1,5 +1,4 @@
-#include "spaceship.h"
-#include "world.h"
+#include "player.h"
 
 Player allocPlayer(int x, int y){
 	Player p;

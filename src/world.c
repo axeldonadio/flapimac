@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "world.h"
-#include "player.h"
-#include "spaceship.h"
+
+
+#define MAX 10000
 
 Walls allocObstacle(int x, int y){
 	Walls w;
@@ -18,7 +19,16 @@ Walls allocObstacle(int x, int y){
 	return NULL;
 }
 
-int drawWorld(Player p, Enemies *e, Walls *w){
-
-	return 1;
+int initializeWorld(Player p, Enemies e, Walls w){
+	FILE *map;
+	map = fopen("map.ppm","r");
+	if( map != NULL){
+		char buffer[MAX];
+		while( fgets( buffer, MAX, map ) != NULL ){
+			printf("%s", buffer);
+		}
+	}
+	else{
+		return 0;
+	}
 }

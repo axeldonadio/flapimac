@@ -1,10 +1,8 @@
 #ifndef WORLD_H
 #define WORLD_H
-
-	typedef struct coord {
-		int x;
-		int y;
-	} Coord;
+	
+	#include "player.h"
+	#include "spaceship.h"
 
 	typedef struct obstacle {
 		Coord Pmin;
@@ -12,7 +10,7 @@
 		struct obstacle *next;
 	} Obstacle, *Walls;
 
-	int drawWorld(Player p, Enemies *e, Walls *w);
+	int initializeWorld(Player p, Enemies e, Walls w);
 	// Fonction qui récupère un fichier .ppm et dessine un monde.
 
 #endif

@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include "world.h"
+#include "player.h"
+#include "spaceship.h"
 
 /* Dimensions de la fenêtre */
 static unsigned int WINDOW_WIDTH = 1080;
@@ -25,7 +28,12 @@ void resizeViewport() {
 
 
 int main(int argc, char** argv) {
-
+    Player player;
+    Enemies enemies;
+    enemies = NULL;
+    Walls walls;
+    walls = NULL;
+    initializeWorld(player, enemies, walls);
     /* Initialisation de la SDL */
     if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
         fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");

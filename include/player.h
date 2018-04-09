@@ -1,7 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-	#include "world.h"
+	typedef struct coord {
+		int x;
+		int y;
+	} Coord;
 
 	typedef struct player {
 		Coord Pmin;

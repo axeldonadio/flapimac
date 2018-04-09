@@ -1,7 +1,7 @@
 #ifndef SPACESHIP_H
 #define SPACESHIP_H
 
-	#include "world.h"
+	#include "player.h"
 
 	typedef struct spaceship {
 		Coord Pmin;
