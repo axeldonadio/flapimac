@@ -52,6 +52,10 @@ int main(int argc, char** argv) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     int loop = 1;
+    
+    int action;
+    int mode = 0;
+    int selection;
 
     /* Boucle d'affichage */
     while(loop) {
@@ -68,6 +72,10 @@ int main(int argc, char** argv) {
 
         /* Boucle traitant les evenements */
         SDL_Event e;
+        if (mode == 1){
+            movePlayer(player, action);
+        }
+        
         while(SDL_PollEvent(&e)) {
 
             /* L'utilisateur ferme la fenêtre : */
@@ -77,6 +85,25 @@ int main(int argc, char** argv) {
             }
             
             /* Quelques exemples de traitement d'evenements : */
+            
+            switch(e.type){
+                case SDL_KEYDOWN:
+                    selection = e.key.keysym.sym;
+                    
+                    if (selection == SDLK_UP){
+                        mode = 1;
+                        action = 1;
+                    }
+                    if (selection == SDLK_DOWN){
+                        mode = 1;
+                        action = 0;
+                    }
+                    break;
+                case SDL_KEYUP:
+                    mode = 0;
+                break;
+                
+            }
         }
 
         /* Echange du front et du back buffer : mise à jour de la fenêtre */

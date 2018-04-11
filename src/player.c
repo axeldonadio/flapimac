@@ -50,9 +50,11 @@ void movePlayer(Player p, int action){
     if (action == 1){
         p.Pmin.y++;
         p.Pmax.y++;
+        printf("up\n");
     }
     else{
         p.Pmin.y--;
         p.Pmax.y--;
+        printf("down\n");
     }
 }
