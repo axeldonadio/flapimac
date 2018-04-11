@@ -46,15 +46,19 @@ void drawPlayer(Player p){
 *   1 : player goes up
 *   0 : player goes down
 */
-void movePlayer(Player p, int action){
+void movePlayer(Player *p, int action){
     if (action == 1){
-        p.Pmin.y++;
-        p.Pmax.y++;
-        printf("up\n");
+        if (p->Pmax.y < MAP_HEIGHT){
+            p->Pmin.y++;
+            p->Pmax.y++;
+            printf("up\n");
+        }
     }
     else{
-        p.Pmin.y--;
-        p.Pmax.y--;
-        printf("down\n");
+        if (p->Pmin.y > 0){
+            p->Pmin.y--;
+            p->Pmax.y--;
+            printf("down\n");
+        }
     }
 }

@@ -4,6 +4,9 @@
 	#include "player.h"
 	#include "spaceship.h"
 
+extern int MAP_WIDTH;
+extern int MAP_HEIGHT;
+
 	typedef struct obstacle {
 		Coord Pmin;
 		Coord Pmax;

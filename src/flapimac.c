@@ -8,6 +8,9 @@
 #include "player.h"
 #include "spaceship.h"
 
+int MAP_WIDTH = 18;
+int MAP_HEIGHT = 18;
+
 /* Dimensions de la fenêtre */
 static unsigned int WINDOW_WIDTH = 1080;
 static unsigned int WINDOW_HEIGHT = 720;
@@ -22,13 +25,14 @@ void resizeViewport() {
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0., 5., 0., 5.);
+    gluOrtho2D(0., MAP_WIDTH, 0., MAP_HEIGHT);
     SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, BIT_PER_PIXEL, SDL_OPENGL | SDL_RESIZABLE);
 }
 
 
 int main(int argc, char** argv) {
     Player player;
+    player = allocPlayer(1, 2, 248, 254, 14);
     Enemies enemies;
     enemies = NULL;
     Walls walls;
@@ -67,13 +71,13 @@ int main(int argc, char** argv) {
 
         glClear(GL_COLOR_BUFFER_BIT); // Toujours commencer par clear le buffer
         
-        player = allocPlayer(1, 2, 248, 254, 14);
+        
         drawPlayer(player);
 
         /* Boucle traitant les evenements */
         SDL_Event e;
         if (mode == 1){
-            movePlayer(player, action);
+            movePlayer(&player, action);
         }
         
         while(SDL_PollEvent(&e)) {

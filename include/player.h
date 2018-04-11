@@ -1,6 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+extern int MAP_WIDTH;
+extern int MAP_HEIGHT;
+
 /*
 *   defines a coordinate structure for the x and the y axes
 */
@@ -48,6 +51,6 @@ void drawPlayer(Player p);
 *   1 : player goes up
 *   0 : player goes down
 */
-void movePlayer(Player p, int action);
+void movePlayer(Player *p, int action);
 
 #endif
