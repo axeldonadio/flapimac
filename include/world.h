@@ -13,7 +13,7 @@ extern int MAP_HEIGHT;
 		struct obstacle *next;
 	} Obstacle, *Walls;
 
-	int initializeWorld(Player p, Enemies e, Walls w);
+	void initializeWorld(Player p, Enemies e, Walls w);
 	// Fonction qui récupère un fichier .ppm et dessine un monde.
 
 #endif
