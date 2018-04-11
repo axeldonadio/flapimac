@@ -46,7 +46,8 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
     SDL_WM_SetCaption("Flapimac", NULL);
-
+    resizeViewport();
+    
     glClearColor(0.1, 0.1, 0.1, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -61,6 +62,9 @@ int main(int argc, char** argv) {
         /* Code de dessin */
 
         glClear(GL_COLOR_BUFFER_BIT); // Toujours commencer par clear le buffer
+        
+        player = allocPlayer(1, 2, 248, 254, 14);
+        drawPlayer(player);
 
         /* Boucle traitant les evenements */
         SDL_Event e;
