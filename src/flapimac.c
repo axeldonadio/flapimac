@@ -32,12 +32,13 @@ void resizeViewport() {
 
 int main(int argc, char** argv) {
     Player player;
-    player = allocPlayer(1, 2, 248, 254, 14);
+    //player = allocPlayer(1, 2, 248, 254, 14);
     Enemies enemies;
     enemies = NULL;
     Walls walls;
     walls = NULL;
-    initializeWorld(player, enemies, walls);
+    initializeWorld(&player, enemies, walls);
+    printf("%d", player.c.red);
     /* Initialisation de la SDL */
     if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
         fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
