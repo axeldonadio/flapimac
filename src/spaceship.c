@@ -14,23 +14,19 @@ Enemies allocSpaceship(int x, int y, int red, int green, int blue){
 		e->Pmin.y = y;
 		e->Pmax.x = x + 1;
 		e->Pmax.y = y + 1;
-<<<<<<< HEAD
         
-        e->c.red = red;
-        e->c.green = green;
-        e->c.blue = blue;
-=======
+		e->c.red = red;
+		e->c.green = green;
+		e->c.blue = blue;
 
 		e->c.red = red;
 		e->c.green = green;
 		e->c.blue = blue;
->>>>>>> dev
 		e->next = NULL;
 	}
 	return e;
 }
 
-<<<<<<< HEAD
 void drawEnemies(Enemies e){
     glColor3ub(e->c.red, e->c.green, e->c.blue);
     glBegin(GL_QUADS);
@@ -39,7 +35,8 @@ void drawEnemies(Enemies e){
         glVertex2f(e->Pmin.x+1, e->Pmin.y);
 		glVertex2f(e->Pmin.x, e->Pmin.y);
 	glEnd();
-=======
+}
+
 void addSpaceship(Enemies *e, int x, int y, int red, int green, int blue){
 	if(*e == NULL){
 		*e = allocSpaceship(x, y, red, green, blue);
@@ -47,5 +44,4 @@ void addSpaceship(Enemies *e, int x, int y, int red, int green, int blue){
 	else{
 		addSpaceship(&(*e)->next, x, y, red, green, blue);
 	}
->>>>>>> dev
 }
