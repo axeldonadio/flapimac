@@ -33,8 +33,10 @@ void resizeViewport() {
 int main(int argc, char** argv) {
     Player player;
     player = allocPlayer(1, 2, 248, 254, 14);
+    
     Enemies enemies;
-    enemies = NULL;
+    enemies = allocSpaceship(1, 5, 0, 255, 0);
+        
     Walls walls;
     walls = NULL;
     initializeWorld(player, enemies, walls);
@@ -73,6 +75,8 @@ int main(int argc, char** argv) {
         
         
         drawPlayer(player);
+        drawEnemies(enemies);
+        collisionEnemies(&player, enemies);
 
         /* Boucle traitant les evenements */
         SDL_Event e;

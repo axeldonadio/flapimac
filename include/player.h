@@ -4,6 +4,8 @@
 extern int MAP_WIDTH;
 extern int MAP_HEIGHT;
 
+
+
 /*
 *   defines a coordinate structure for the x and the y axes
 */
@@ -20,6 +22,8 @@ typedef struct color {
     int green;
     int blue;
 } Color;
+
+#include "spaceship.h"
 
 /*
 *   defines a player structure with its Pmin and Pmax coordinates
@@ -52,5 +56,7 @@ void drawPlayer(Player p);
 *   0 : player goes down
 */
 void movePlayer(Player *p, int action);
+
+void collisionEnemies(Player *p, Enemies e);
 
 #endif

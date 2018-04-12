@@ -15,7 +15,7 @@
 *                    blue : color rgb
 *   @return Player
 */
-Player allocPlayer(int x, int y, int red, int green, int blue ) {
+Player allocPlayer(int x, int y, int red, int green, int blue){
 	Player p;
 	p.Pmin.x = x;
 	p.Pmin.y = y;
@@ -54,11 +54,15 @@ void movePlayer(Player *p, int action){
             printf("up\n");
         }
     }
-    else{
-        if (p->Pmin.y > 0){
+    else if (p->Pmin.y > 0){
             p->Pmin.y--;
             p->Pmax.y--;
             printf("down\n");
         }
+}
+
+void collisionEnemies(Player *p, Enemies e){
+    if (p->Pmin.x == e->Pmin.x && p->Pmin.y == e->Pmin.y && p->Pmax.x == e->Pmax.x && p->Pmax.y == e->Pmax.y){
+        printf("CRASH\n");
     }
 }
