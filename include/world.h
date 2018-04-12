@@ -10,10 +10,13 @@ extern int MAP_HEIGHT;
 	typedef struct obstacle {
 		Coord Pmin;
 		Coord Pmax;
+		Color c;
 		struct obstacle *next;
 	} Obstacle, *Walls;
 
-	void initializeWorld(Player p, Enemies e, Walls w);
+	void initializeWorld(Player *p, Enemies e, Walls w);
 	// Fonction qui récupère un fichier .ppm et dessine un monde.
+	Walls allocObstacle(int x, int y, int red, int green, int blue);
+	void addObstacle(Walls w, int x, int y, int red, int green, int blue);
 
 #endif
