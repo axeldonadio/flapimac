@@ -32,12 +32,8 @@ void resizeViewport() {
 
 int main(int argc, char** argv) {
     Player player;
-<<<<<<< HEAD
-    player = allocPlayer(1, 2, 248, 254, 14);
-    
-=======
     //player = allocPlayer(1, 2, 248, 254, 14);
->>>>>>> dev
+
     Enemies enemies;
     enemies = allocSpaceship(1, 5, 0, 255, 0);
         
