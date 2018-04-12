@@ -29,6 +29,23 @@ Player allocPlayer(int x, int y, int red, int green, int blue){
 	return p;
 }
 
+Pshot allocPmissile(float x, float y, int red, int green, int blue){
+    Pshot m;
+    m = malloc(sizeof(Pmissile));
+    if( m != NULL){
+        m->Pmin.x = x;
+        m->Pmin.y = y;
+        m->Pmax.x = x + 1;
+        m->Pmax.y = y + 1;
+
+        m->c.red = red;
+        m->c.green = green;
+        m->c.blue = blue;
+        m->next = NULL;
+    }
+    return m;
+}
+
 /*  
 *   draw a square which represents the player
 */
@@ -52,18 +69,49 @@ void movePlayer(Player *p, int action){
         if (p->Pmax.y < MAP_HEIGHT){
             p->Pmin.y++;
             p->Pmax.y++;
-            printf("up\n");
         }
     }
     else if (p->Pmin.y > 0){
-            p->Pmin.y--;
-            p->Pmax.y--;
-            printf("down\n");
-        }
+        p->Pmin.y--;
+        p->Pmax.y--;
+    }
 }
 
-void collisionEnemies(Player *p, Enemies e){
-    if (p->Pmin.x == e->Pmin.x && p->Pmin.y == e->Pmin.y && p->Pmax.x == e->Pmax.x && p->Pmax.y == e->Pmax.y){
-        printf("CRASH\n");
+void staticPlayer(Player *p){
+    p->Pmin.x = p->Pmin.x + 0.2;
+    p->Pmax.x = p->Pmax.x + 0.2;
+}
+
+void addMissile(Pshot *s, Player p){
+    if(*s == NULL){
+        *s = allocPmissile(p.Pmin.x, p.Pmin.y, p.c.red, p.c.green, p.c.blue);
+    }
+    else{
+        addMissile(&(*s)->next, p);
+    }
+}
+
+void drawMissile(Pmissile pm){
+    glColor3ub(pm.c.red, pm.c.green, pm.c.blue);
+    glBegin(GL_QUADS);
+        glVertex2f(pm.Pmax.x-1, pm.Pmax.y);
+        glVertex2f(pm.Pmax.x, pm.Pmax.y);
+        glVertex2f(pm.Pmin.x+1, pm.Pmin.y);
+        glVertex2f(pm.Pmin.x, pm.Pmin.y);
+    glEnd();
+}
+
+void drawShot(Pshot ps){
+    if(ps != NULL){
+        drawMissile(*ps);
+        drawShot(ps->next);
+    }
+}
+
+void moveShot(Pshot *ps){
+    if(*ps != NULL){
+        (*ps)->Pmin.x = (*ps)->Pmin.x + 0.4;
+        (*ps)->Pmax.x = (*ps)->Pmax.x + 0.4;
+        moveShot(&(*ps)->next);
     }
 }

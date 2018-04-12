@@ -1,5 +1,9 @@
-#include <stdio.h>
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
 #include "world.h"
 
 
@@ -22,15 +26,29 @@ Walls allocObstacle(int x, int y, int red, int green, int blue){
 	return w;	
 }
 
-void addObstacle(Walls w, int x, int y, int red, int green, int blue){
-	//printf("x : %d, y : %d, r : %d, v : %d, b : %d\n", x , y, red, green, blue);
-	//fflush(stdout);
-	if(w == NULL){
-		w = allocObstacle(x, y, red, green, blue);
-		printf(" x :%d , y :%d \n", x, y);
+void drawObstacle(Obstacle o){
+    glColor3ub(o.c.red, o.c.green, o.c.blue);
+    glBegin(GL_QUADS);
+		glVertex2f(o.Pmax.x-1, o.Pmax.y);
+		glVertex2f(o.Pmax.x, o.Pmax.y);
+        glVertex2f(o.Pmin.x+1, o.Pmin.y);
+		glVertex2f(o.Pmin.x, o.Pmin.y);
+	glEnd();
+}
+
+void drawWalls(Walls w){
+	if(w != NULL){
+		drawObstacle(*w);
+		drawWalls(w->next);
+	}
+}
+
+void addObstacle(Walls *w, int x, int y, int red, int green, int blue){
+	if(*w == NULL){
+		*w = allocObstacle(x, y, red, green, blue);
 	}
 	else{
-		addObstacle(w->next, x, y, red, green, blue);
+		addObstacle(&(*w)->next, x, y, red, green, blue);
 
 	}
 }
@@ -45,7 +63,7 @@ void foo ( char *line, int buffer[MAX], int *count ) {
     *count = i;
 }
 
-void initializeWorld(Player *p, Enemies e, Walls w){
+void initializeWorld(Player *p, Enemies *e, Walls *w){
 	FILE *map;
 	map = fopen("map.ppm","r");
 	if( map != NULL){
@@ -62,12 +80,9 @@ void initializeWorld(Player *p, Enemies e, Walls w){
 				r = buffer[j++];
 				v = buffer[j++];
 				b = buffer[j++];
-				printf("%d ", r);
-				printf("%d ", v);
-				printf("%d ", b);
 				if(v == 255){
 					//enemies
-					//addSpaceship(e, i, j, 0, 255, 0);
+					addSpaceship(e, (j/3)-1, i, 0, 255, 0);
 				}
 				else if( r == 255 ){
 					//obstacle
@@ -77,9 +92,7 @@ void initializeWorld(Player *p, Enemies e, Walls w){
 					//player
 					*p = allocPlayer((j/3)-1, i, 248, 254, 14 );
 				}
-				//printf("%d", j);
 			}
-			printf("\n");
 			j = 0;
 			i++;
 		}

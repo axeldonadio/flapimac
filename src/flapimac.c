@@ -4,12 +4,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <time.h>
 #include "world.h"
 #include "player.h"
 #include "spaceship.h"
 
-int MAP_WIDTH = 18;
-int MAP_HEIGHT = 18;
+int MAP_WIDTH = 24;
+int MAP_HEIGHT = 16;
 
 /* Dimensions de la fenêtre */
 static unsigned int WINDOW_WIDTH = 1080;
@@ -19,7 +20,7 @@ static unsigned int WINDOW_HEIGHT = 720;
 static const unsigned int BIT_PER_PIXEL = 32;
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
-static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
+static const Uint32 FRAMERATE_MILLISECONDS = 1000/20;
 
 void resizeViewport() {
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -35,12 +36,15 @@ int main(int argc, char** argv) {
     //player = allocPlayer(1, 2, 248, 254, 14);
 
     Enemies enemies;
-    enemies = allocSpaceship(1, 5, 0, 255, 0);
+    enemies = NULL;
         
     Walls walls;
     walls = NULL;
-    initializeWorld(&player, enemies, walls);
-    printf("%d", player.c.red);
+
+    Pshot ps;
+    ps = NULL;
+
+    initializeWorld(&player, &enemies, &walls);
     /* Initialisation de la SDL */
     if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
         fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
@@ -74,17 +78,22 @@ int main(int argc, char** argv) {
 
         glClear(GL_COLOR_BUFFER_BIT); // Toujours commencer par clear le buffer
         
-        
         drawPlayer(player);
-        drawEnemies(enemies);
+        staticPlayer(&player);
         collisionEnemies(&player, enemies);
-
-        /* Boucle traitant les evenements */
-        SDL_Event e;
+        drawShot(ps);
+        moveShot(&ps);
+        glTranslatef(-0.2,0,0);
+        drawEnemies(enemies);
+        drawWalls(walls);
+        
+       
         if (mode == 1){
             movePlayer(&player, action);
         }
-        
+
+        /* Boucle traitant les evenements */
+        SDL_Event e;
         while(SDL_PollEvent(&e)) {
 
             /* L'utilisateur ferme la fenêtre : */
@@ -109,7 +118,15 @@ int main(int argc, char** argv) {
                     }
                     break;
                 case SDL_KEYUP:
+                    selection = e.key.keysym.sym;
                     mode = 0;
+                    if (selection == SDLK_SPACE){
+                        mode = 2;
+                    }
+                    if (mode == 2){
+                        addMissile(&ps, player);
+                    }
+
                 break;
                 
             }

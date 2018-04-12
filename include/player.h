@@ -10,8 +10,8 @@ extern int MAP_HEIGHT;
 *   defines a coordinate structure for the x and the y axes
 */
 typedef struct coord {
-    int x;
-    int y;
+    float x;
+    float y;
 } Coord;
 
 /*
@@ -23,8 +23,6 @@ typedef struct color {
     int blue;
 } Color;
 
-#include "spaceship.h"
-
 /*
 *   defines a player structure with its Pmin and Pmax coordinates
 */
@@ -33,6 +31,13 @@ typedef struct player {
     Coord Pmax;
     Color c;
 } Player;
+
+typedef struct pMissile {
+	Coord Pmin;
+    Coord Pmax;
+    Color c;
+    struct pMissile *next;
+} Pmissile, *Pshot;
 
 /*
 *   allocates memory to the player
@@ -43,7 +48,11 @@ typedef struct player {
 *                    blue : color rgb
 *   @return Player
 */
-Player allocPlayer(int x, int y, int red, int green, int blue );
+Player allocPlayer(int x, int y, int red, int green, int blue);
+Pshot allocPmissile(float x, float y, int red, int green, int blue);
+void addMissile(Pshot *s, Player p);
+void drawShot(Pshot ps);
+void moveShot(Pshot *ps);
 
 /*  
 *   draw a square which represents the player
@@ -56,7 +65,7 @@ void drawPlayer(Player p);
 *   0 : player goes down
 */
 void movePlayer(Player *p, int action);
+void staticPlayer(Player *p);
 
-void collisionEnemies(Player *p, Enemies e);
 
 #endif

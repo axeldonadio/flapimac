@@ -14,10 +14,6 @@ Enemies allocSpaceship(int x, int y, int red, int green, int blue){
 		e->Pmin.y = y;
 		e->Pmax.x = x + 1;
 		e->Pmax.y = y + 1;
-        
-		e->c.red = red;
-		e->c.green = green;
-		e->c.blue = blue;
 
 		e->c.red = red;
 		e->c.green = green;
@@ -27,14 +23,21 @@ Enemies allocSpaceship(int x, int y, int red, int green, int blue){
 	return e;
 }
 
-void drawEnemies(Enemies e){
-    glColor3ub(e->c.red, e->c.green, e->c.blue);
+void drawSpaceship(Spaceship s){
+    glColor3ub(s.c.red, s.c.green, s.c.blue);
     glBegin(GL_QUADS);
-		glVertex2f(e->Pmax.x-1, e->Pmax.y);
-		glVertex2f(e->Pmax.x, e->Pmax.y);
-        glVertex2f(e->Pmin.x+1, e->Pmin.y);
-		glVertex2f(e->Pmin.x, e->Pmin.y);
+		glVertex2f(s.Pmax.x-1, s.Pmax.y);
+		glVertex2f(s.Pmax.x, s.Pmax.y);
+        glVertex2f(s.Pmin.x+1, s.Pmin.y);
+		glVertex2f(s.Pmin.x, s.Pmin.y);
 	glEnd();
+}
+
+void drawEnemies(Enemies e){
+	if(e != NULL){
+		drawSpaceship(*e);
+		drawEnemies(e->next);
+	}
 }
 
 void addSpaceship(Enemies *e, int x, int y, int red, int green, int blue){
@@ -44,4 +47,14 @@ void addSpaceship(Enemies *e, int x, int y, int red, int green, int blue){
 	else{
 		addSpaceship(&(*e)->next, x, y, red, green, blue);
 	}
+}
+
+void collisionEnemies(Player *p, Enemies e){
+	while(e != NULL){
+		if ((int)p->Pmin.x == e->Pmin.x && (int)p->Pmin.y == e->Pmin.y && (int)p->Pmax.x == e->Pmax.x && (int)p->Pmax.y == e->Pmax.y){
+	        printf("CRASH\n");
+	    }
+		e = e->next;
+	}
+	   
 }
