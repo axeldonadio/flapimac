@@ -3,6 +3,7 @@
 #include <GL/glu.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <SDL/SDL_image.h>
 #include <assert.h>
 #include "player.h"
 
